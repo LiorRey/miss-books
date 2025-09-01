@@ -8,6 +8,7 @@ export function BookPreview({ book }) {
         Price: {amount} {currencyCode}
       </h4>
       <h4>On Sale: {isOnSale}</h4>
+      {/* <img src={imageSrc} title={title} alt={`Image of: ${title}`} /> */}
     </article>
   )
 }
