@@ -12,9 +12,6 @@ export function BookDetails() {
     loadBook()
   }, [params.bookId])
 
-  const { title, listPrice } = book
-  const { amount, currencyCode, isOnSale } = listPrice
-
   function loadBook() {
     bookService
       .get(params.bookId)
@@ -27,6 +24,9 @@ export function BookDetails() {
   }
 
   if (!book) return <div>Loading...</div>
+
+  const { title, listPrice } = book
+  const { amount, currencyCode, isOnSale } = listPrice
   return (
     <section className="book-details">
       <h1>Book Title: {title}</h1>
@@ -48,7 +48,6 @@ export function BookDetails() {
         <button>
           <Link to={`/book/${book.nextBookId}`}>Next</Link>
         </button>
-        <button></button>
       </section>
     </section>
   )
