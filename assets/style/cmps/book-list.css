@@ -1,0 +1,9 @@
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding-block-start: 20px;
+}
+.book-list-actions-container {
+  padding-block-start: 5px;
+}

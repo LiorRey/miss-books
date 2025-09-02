@@ -1,0 +1,21 @@
+.book-details {
+  height: 80vh;
+  display: grid;
+  grid-template-rows: 50px 25px 45px;
+  align-items: center;
+}
+.book-details-image-and-actions-container,
+img {
+  width: 350px;
+}
+.book-details-actions-container {
+  display: flex;
+  justify-content: space-between;
+}
+.book-details-actions-container > button {
+  margin-inline-start: 0;
+}
+
+.book-details-actions-container div * {
+  margin-inline-end: 0;
+}

@@ -1,0 +1,13 @@
+.book-preview {
+  display: grid;
+
+  grid-template-rows: 3fr 2fr 2fr 5fr;
+  justify-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.book-preview * {
+  margin-block: auto;
+}
+.book-preview img {
+  width: 150px;
+}

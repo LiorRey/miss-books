@@ -4,19 +4,19 @@ const { Link } = ReactRouterDOM
 
 export function BookList({ books, onRemoveBook }) {
   return (
-    <ul className="book-list">
+    <section className="book-list">
       {books.map(book => (
-        <li key={book.id}>
+        <article key={book.id}>
           <BookPreview book={book} />
-          <section>
-            <button onClick={() => onRemoveBook(book.id)}>Remove</button>
+          <section className="book-list-actions-container">
             <button>
               <Link to={`/book/${book.id}`}>Details</Link>
             </button>
             <button>Edit</button>
+            <button onClick={() => onRemoveBook(book.id)}>Remove</button>
           </section>
-        </li>
+        </article>
       ))}
-    </ul>
+    </section>
   )
 }
