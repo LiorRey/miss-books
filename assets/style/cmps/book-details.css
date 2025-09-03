@@ -41,3 +41,31 @@
   align-self: flex-end;
   margin-block-end: 0;
 }
+
+/* Text color according to book's price */
+
+.amount-red {
+  color: red;
+}
+.amount-green {
+  color: green;
+}
+
+/* Nice animated sign for "On Sale" */
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.on-sale-animation {
+  color: cornflowerblue;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+}

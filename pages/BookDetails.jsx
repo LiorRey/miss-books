@@ -73,6 +73,7 @@ export function BookDetails() {
           Publish Year:
           <br />
           {publishedDate}
+          {bookService.getSeniorityLabelForBook(publishedDate)}
         </h3>
         <h3>
           Description:
@@ -83,6 +84,7 @@ export function BookDetails() {
           Page Count:
           <br />
           {pageCount}
+          {bookService.getTypeReadingLabelForBook(pageCount)}
         </h3>
         <h3>
           Categories:
@@ -94,12 +96,12 @@ export function BookDetails() {
           <br />
           {languageName.of(language)}
         </h3>
-        <h3>
+        <h3 className={bookService.getStyleClassNameForAmountText(amount)}>
           Price:
           <br />
           {amount} {currencyCode}
         </h3>
-        <h1>{isOnSale && "On Sale!"}</h1>
+        {isOnSale && <h1 className="on-sale-animation">On Sale!</h1>}
       </div>
     </section>
   )

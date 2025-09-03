@@ -1,3 +1,5 @@
+import { bookService } from "../services/book.service.js"
+
 export function BookPreview({ book }) {
   const { title, description, listPrice, thumbnail } = book
   const { amount, currencyCode, isOnSale } = listPrice
@@ -10,10 +12,16 @@ export function BookPreview({ book }) {
         <br />
         {description}
       </h3>
-      <h3 className="preview-price">
+      <h3
+        className={`preview-price ${bookService.getStyleClassNameForAmountText(
+          amount
+        )}`}
+      >
         Price: {amount} {currencyCode}
       </h3>
-      <h2 className="preview-is-on-sale">{isOnSale && "On Sale!"}</h2>
+      {isOnSale && (
+        <h2 className="preview-is-on-sale on-sale-animation">On Sale!</h2>
+      )}
       <div className="preview-image-container">
         <img src={thumbnail} title={title} alt={`Image of: ${title}`} />
       </div>
