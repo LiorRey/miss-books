@@ -1,13 +1,36 @@
 .book-preview {
   display: grid;
-
-  grid-template-rows: 3fr 2fr 2fr 5fr;
-  justify-items: center;
+  width: 400px;
+  grid-template-rows: 2fr 3fr 1fr 1fr 6fr;
+  grid-template-areas:
+    "title"
+    "description"
+    "price"
+    "is-on-sale"
+    "image-container";
+  align-items: center;
+  text-align: center;
+  padding-inline: 20px;
+  background-color: aliceblue;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-.book-preview * {
-  margin-block: auto;
+
+.preview-title {
+  grid-area: title;
+}
+.preview-description {
+  grid-area: description;
+}
+.preview-price {
+  grid-area: price;
+}
+.preview-is-on-sale {
+  grid-area: is-on-sale;
+}
+.preview-image-container {
+  grid-area: image-container;
 }
 .book-preview img {
-  width: 150px;
+  width: 250px;
+  border: 1px solid black;
 }

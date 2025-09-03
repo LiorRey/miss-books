@@ -51,11 +51,28 @@ function save(book) {
 
 function getEmptyBook(
   title = "",
-  // description = "",
-  // thumbnail = "",
+  subtitle = "",
+  authors = [],
+  publishedDate = -1,
+  description = "",
+  pageCount = 0,
+  categories = [],
+  thumbnail = "",
+  language = "",
   listPrice = { amount: 0, currencyCode: "", isOnSale: false }
 ) {
-  return { title, description, thumbnail, listPrice }
+  return {
+    title,
+    subtitle,
+    authors,
+    publishedDate,
+    description,
+    pageCount,
+    categories,
+    thumbnail,
+    language,
+    listPrice,
+  }
 }
 
 function getDefaultFilter(filterBy = { title: "", price: 0 }) {
@@ -83,22 +100,21 @@ function _createBooks() {
   if (!books || !books.length) {
     const ctgs = ["Love", "Fiction", "Poetry", "Computers", "Religion"]
     books = []
-    // for (let i = 0; i < 20; i++) {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 20; i++) {
       const book = {
         id: utilService.makeId(),
         title: utilService.makeLorem(2),
-        // subtitle: utilService.makeLorem(4),
-        // authors: [utilService.makeLorem(1)],
-        // publishedDate: utilService.getRandomIntInclusive(1950, 2024),
-        // description: utilService.makeLorem(20),
-        // pageCount: utilService.getRandomIntInclusive(20, 600),
-        // categories: [
-        // ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)],
-        // ],
-        // thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
-        thumbnail: `../assets/img/books-imgs/${i + 1}.jpg`,
-        // language: "en",
+        subtitle: utilService.makeLorem(4),
+        authors: [utilService.makeLorem(1)],
+        publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+        description: utilService.makeLorem(20),
+        pageCount: utilService.getRandomIntInclusive(20, 600),
+        categories: [
+          ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)],
+        ],
+        thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
+        // thumbnail: `../assets/img/books-imgs/${i + 1}.jpg`,
+        language: "en",
         listPrice: {
           amount: utilService.getRandomIntInclusive(80, 500),
           currencyCode: "EUR",
@@ -111,7 +127,7 @@ function _createBooks() {
     utilService.saveToStorage(BOOK_KEY, books)
   }
 
-  console.log("books", books)
+  // console.log("books", books)
 }
 
 // function _createBook(vendor, maxSpeed = 250) {

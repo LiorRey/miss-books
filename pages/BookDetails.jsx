@@ -25,21 +25,25 @@ export function BookDetails() {
 
   if (!book) return <div>Loading...</div>
 
-  const { title, listPrice, thumbnail } = book
+  const {
+    title,
+    subtitle,
+    authors,
+    publishedDate,
+    description,
+    pageCount,
+    categories,
+    listPrice,
+    thumbnail,
+    language,
+  } = book
   const { amount, currencyCode, isOnSale } = listPrice
-  console.log(thumbnail)
+  const languageName = new Intl.DisplayNames(["en"], {
+    type: "language",
+  })
+
   return (
     <section className="book-details">
-      <h2>Title: {title}</h2>
-      <h1>
-        Price: {amount} {currencyCode}
-      </h1>
-      <h1>{isOnSale && "On Sale!"}</h1>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam non
-        excepturi ratione maxime doloremque. Dolore possimus, eaque, blanditiis
-        neque quos quis ad error accusantium libero labore atque ab id ratione?
-      </p>
       <div className="book-details-image-and-actions-container">
         <img src={thumbnail} title={title} alt={`Image of: ${title}`} />
         <section className="book-details-actions-container">
@@ -53,6 +57,49 @@ export function BookDetails() {
             </button>
           </div>
         </section>
+      </div>
+
+      <div className="book-details-info-container">
+        <div className="book-details-title-and-subtitle-container">
+          <h1>{title}</h1>
+          <h3>{subtitle}</h3>
+        </div>
+        <h3>
+          Authors:
+          <br />
+          {authors.join(", ")}
+        </h3>
+        <h3>
+          Publish Year:
+          <br />
+          {publishedDate}
+        </h3>
+        <h3>
+          Description:
+          <br />
+          {description}
+        </h3>
+        <h3>
+          Page Count:
+          <br />
+          {pageCount}
+        </h3>
+        <h3>
+          Categories:
+          <br />
+          {categories.join(", ")}
+        </h3>
+        <h3>
+          Language:
+          <br />
+          {languageName.of(language)}
+        </h3>
+        <h3>
+          Price:
+          <br />
+          {amount} {currencyCode}
+        </h3>
+        <h1>{isOnSale && "On Sale!"}</h1>
       </div>
     </section>
   )
