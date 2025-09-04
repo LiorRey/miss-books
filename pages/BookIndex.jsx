@@ -1,3 +1,4 @@
+import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookList } from "../cmps/BookList.jsx"
 import { bookService } from "../services/book.service.js"
 
@@ -5,14 +6,15 @@ const { useEffect, useState } = React
 
 export function BookIndex() {
   const [books, setBooks] = useState(null)
+  const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
   useEffect(() => {
     loadBooks()
-  }, [])
+  }, [filterBy])
 
   function loadBooks() {
     bookService
-      .query()
+      .query(filterBy)
       .then(setBooks)
       .catch(err => {
         console.log("Error occurred while getting books:", err)
@@ -30,9 +32,17 @@ export function BookIndex() {
       })
   }
 
+  function onSetFilterBy(filterBy) {
+    setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+  }
+
   if (!books) return <div>Loading...</div>
   return (
     <section className="book-index">
+      <BookFilter
+        filterBy={filterBy}
+        onSetFilterBy={onSetFilterBy}
+      ></BookFilter>
       <BookList books={books} onRemoveBook={onRemoveBook} />
     </section>
   )

@@ -26,8 +26,17 @@ function query(filterBy = {}) {
       books = books.filter(book => regExp.test(book.title))
     }
 
-    if (filterBy.price) {
-      books = books.filter(book => book.listPrice.price >= filterBy.price)
+    if (filterBy.description) {
+      const regExp = new RegExp(filterBy.description, "i")
+      books = books.filter(book => regExp.test(book.description))
+    }
+
+    if (filterBy.maxPrice) {
+      books = books.filter(book => book.listPrice.amount <= filterBy.maxPrice)
+    }
+
+    if (filterBy.onSale) {
+      books = books.filter(book => book.listPrice.isOnSale === filterBy.onSale)
     }
 
     return books
@@ -78,8 +87,15 @@ function getEmptyBook(
   }
 }
 
-function getDefaultFilter(filterBy = { title: "", price: 0 }) {
-  return { title: filterBy.title, price: filterBy.price }
+function getDefaultFilter(
+  filterBy = { title: "", description: "", maxPrice: 0, onSale: false }
+) {
+  return {
+    title: filterBy.title,
+    description: filterBy.description,
+    maxPrice: filterBy.maxPrice,
+    onSale: filterBy.onSale,
+  }
 }
 
 function _setNextPrevBookId(book) {
@@ -115,8 +131,8 @@ function _createBooks() {
         categories: [
           ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)],
         ],
-        thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
-        // thumbnail: `../assets/img/books-imgs/${i + 1}.jpg`,
+        // thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
+        thumbnail: `../assets/img/books-imgs/${i + 1}.jpg`,
         language: "en",
         listPrice: {
           amount: utilService.getRandomIntInclusive(80, 500),

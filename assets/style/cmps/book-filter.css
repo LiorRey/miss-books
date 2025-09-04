@@ -1,0 +1,15 @@
+.book-filter div {
+  display: flex;
+  align-items: center;
+  margin-block-end: 5px;
+}
+.book-filter label {
+  width: 110px;
+}
+.book-filter input {
+  margin-inline-start: 0;
+}
+.book-filter button {
+  margin-inline-start: 0;
+  margin-block-end: 0;
+}
