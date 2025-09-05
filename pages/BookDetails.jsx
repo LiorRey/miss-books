@@ -1,3 +1,4 @@
+import { LongTxt } from "./LongTxt.jsx"
 import { bookService } from "../services/book.service.js"
 
 const { useState, useEffect } = React
@@ -75,11 +76,7 @@ export function BookDetails() {
           {publishedDate}
           {bookService.getSeniorityLabelForBook(publishedDate)}
         </h3>
-        <h3>
-          Description:
-          <br />
-          {description}
-        </h3>
+        <LongTxt txt={description} length={100} />
         <h3>
           Page Count:
           <br />

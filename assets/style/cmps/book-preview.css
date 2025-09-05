@@ -1,14 +1,13 @@
 .book-preview {
   display: grid;
   width: 400px;
-  grid-template-rows: 2fr 3fr 1fr 1fr 6fr;
+  grid-template-rows: 1fr 4fr 1fr 1fr 6fr;
   grid-template-areas:
     "title"
     "description"
     "price"
     "is-on-sale"
     "image-container";
-  align-items: center;
   text-align: center;
   padding-inline: 20px;
   background-color: aliceblue;
@@ -17,6 +16,7 @@
 
 .preview-title {
   grid-area: title;
+  text-decoration: underline;
 }
 .preview-description {
   grid-area: description;

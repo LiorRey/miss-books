@@ -1,3 +1,4 @@
+import { LongTxt } from "./LongTxt.jsx"
 import { bookService } from "../services/book.service.js"
 
 export function BookPreview({ book }) {
@@ -7,11 +8,11 @@ export function BookPreview({ book }) {
   return (
     <article className="book-preview">
       <h2 className="preview-title">Title: {title}</h2>
-      <h3 className="preview-description">
-        Description:
-        <br />
-        {description}
-      </h3>
+      <LongTxt
+        txt={description}
+        length={100}
+        classNameFromPreview="preview-description"
+      />
       <h3
         className={`preview-price ${bookService.getStyleClassNameForAmountText(
           amount

@@ -27,7 +27,7 @@
   display: grid;
   width: 500px;
   height: 75vh;
-  grid-template-rows: 3fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 2fr;
+  grid-template-rows: 3fr 1fr 1fr 5fr 1fr 1fr 1fr 1fr 2fr;
   margin-inline-start: 4vw;
 }
 .book-details-title-and-subtitle-container * {

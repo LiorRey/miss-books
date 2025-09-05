@@ -1,0 +1,11 @@
+.no-margin-block-end {
+  margin-block-end: 0;
+}
+.no-margin-block-start {
+  margin-block-start: 0;
+}
+.clickable-text {
+  display: inline;
+  cursor: pointer;
+  color: blue;
+}
