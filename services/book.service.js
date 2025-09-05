@@ -132,7 +132,7 @@ function _createBooks() {
           ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)],
         ],
         // thumbnail: `http://coding-academy.org/books-photos/${i + 1}.jpg`,
-        thumbnail: `/assets/img/books-imgs/${i + 1}.jpg`,
+        thumbnail: `assets/img/books-imgs/${i + 1}.jpg`,
         language: "en",
         listPrice: {
           amount: utilService.getRandomIntInclusive(80, 500),
