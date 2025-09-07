@@ -25,7 +25,7 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
     setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
   }
 
-  function onSubmitFilter(ev) {
+  function onClearFilters(ev) {
     ev.preventDefault()
 
     const defaultFilter = bookService.getDefaultFilter()
@@ -37,7 +37,7 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
   return (
     <section className="book-filter">
       <h2>Filter Our Books</h2>
-      <form onSubmit={onSubmitFilter}>
+      <form onSubmit={onClearFilters}>
         <div>
           <label htmlFor="title">
             <h3>Title:</h3>
