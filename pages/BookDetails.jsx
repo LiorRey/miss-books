@@ -24,6 +24,21 @@ export function BookDetails() {
     navigate("/book")
   }
 
+  function getSeniorityLabelForBook(publishedDate) {
+    const currentYear = new Date().getFullYear()
+    const yearsSincePublish = currentYear - publishedDate
+    if (yearsSincePublish > 10) return " (Vintage)"
+    if (yearsSincePublish < 1) return " (New)"
+    return ""
+  }
+
+  function getTypeReadingLabelForBook(pageCount) {
+    if (pageCount > 500) return " (Serious Reading)"
+    if (pageCount > 200) return " (Descent Reading)"
+    if (pageCount < 100) return " (Light Reading)"
+    return ""
+  }
+
   if (!book) return <div>Loading...</div>
 
   const {
@@ -74,14 +89,14 @@ export function BookDetails() {
           Publish Year:
           <br />
           {publishedDate}
-          {bookService.getSeniorityLabelForBook(publishedDate)}
+          {getSeniorityLabelForBook(publishedDate)}
         </h3>
         <LongTxt txt={description} length={100} />
         <h3>
           Page Count:
           <br />
           {pageCount}
-          {bookService.getTypeReadingLabelForBook(pageCount)}
+          {getTypeReadingLabelForBook(pageCount)}
         </h3>
         <h3>
           Categories:

@@ -11,8 +11,6 @@ export const bookService = {
   save,
   getEmptyBook,
   getDefaultFilter,
-  getTypeReadingLabelForBook,
-  getSeniorityLabelForBook,
   getStyleClassNameForAmountText,
 }
 
@@ -154,21 +152,6 @@ function _createBooks() {
 //   book.id = utilService.makeId()
 //   return book
 // }
-
-function getTypeReadingLabelForBook(pageCount) {
-  if (pageCount > 500) return " (Serious Reading)"
-  if (pageCount > 200) return " (Descent Reading)"
-  if (pageCount < 100) return " (Light Reading)"
-  return ""
-}
-
-function getSeniorityLabelForBook(publishedDate) {
-  const currentYear = new Date().getFullYear()
-  const yearsSincePublish = currentYear - publishedDate
-  if (yearsSincePublish > 10) return " (Vintage)"
-  if (yearsSincePublish < 1) return " (New)"
-  return ""
-}
 
 function getStyleClassNameForAmountText(amount) {
   if (amount > 150) return "amount-red"
