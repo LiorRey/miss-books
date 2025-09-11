@@ -1,0 +1,19 @@
+.book-edit div {
+  display: flex;
+  align-items: center;
+  margin-block-end: 5px;
+}
+.book-edit label {
+  width: 240px;
+  margin-bottom: 5px;
+}
+.book-edit input {
+  margin-inline-start: 0;
+}
+.book-edit input:not([type="checkbox"]) {
+  width: 500px;
+}
+.book-edit button {
+  margin-inline-start: 0;
+  margin-block-end: 0;
+}

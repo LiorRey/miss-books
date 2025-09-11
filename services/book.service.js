@@ -2,6 +2,7 @@ import { utilService } from "./util.service.js"
 import { storageService } from "./async-storage.service.js"
 
 const BOOK_KEY = "bookDB"
+const ctgs = ["Love", "Fiction", "Poetry", "Computers", "Religion"]
 _createBooks()
 
 export const bookService = {
@@ -11,6 +12,7 @@ export const bookService = {
   save,
   getEmptyBook,
   getDefaultFilter,
+  fillRemainingEmptyFieldsOfNewBook,
   getStyleClassNameForAmountText,
 }
 
@@ -63,13 +65,13 @@ function getEmptyBook(
   title = "",
   subtitle = "",
   authors = [],
-  publishedDate = -1,
+  publishedDate = 0,
   description = "",
   pageCount = 0,
   categories = [],
   thumbnail = "",
-  language = "",
-  listPrice = { amount: 0, currencyCode: "", isOnSale: false }
+  language = "en",
+  listPrice = { amount: 0, currencyCode: "EUR", isOnSale: false }
 ) {
   return {
     title,
@@ -115,7 +117,6 @@ function _createBooks() {
   let books = utilService.loadFromStorage(BOOK_KEY)
 
   if (!books || !books.length) {
-    const ctgs = ["Love", "Fiction", "Poetry", "Computers", "Religion"]
     books = []
     for (let i = 0; i < 20; i++) {
       const book = {
@@ -143,8 +144,55 @@ function _createBooks() {
 
     utilService.saveToStorage(BOOK_KEY, books)
   }
+}
 
-  // console.log("books", books)
+function fillRemainingEmptyFieldsOfNewBook(newBook) {
+  let newBookRemainingFields = {}
+  if (newBook) {
+    newBookRemainingFields = {
+      title:
+        newBook.title.trim() !== "" ? newBook.title : utilService.makeLorem(2),
+      subtitle:
+        newBook.subtitle.trim() !== ""
+          ? newBook.subtitle
+          : utilService.makeLorem(4),
+      authors:
+        newBook.authors.length > 0
+          ? newBook.authors
+          : [utilService.makeLorem(1)],
+      publishedDate:
+        newBook.publishedDate >= 1950 &&
+        newBook.publishedDate <= new Date().getFullYear()
+          ? newBook.publishedDate
+          : utilService.getRandomIntInclusive(1950, 2024),
+      description:
+        newBook.description.trim() !== ""
+          ? newBook.description
+          : utilService.makeLorem(20),
+      pageCount:
+        newBook.pageCount > 0
+          ? newBook.pageCount
+          : utilService.getRandomIntInclusive(20, 600),
+      categories:
+        newBook.categories.length > 0
+          ? newBook.categories
+          : [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
+      thumbnail: `assets/img/books-imgs/${utilService.getRandomIntInclusive(
+        1,
+        20
+      )}.jpg`,
+      listPrice: {
+        amount:
+          newBook.listPrice.amount > 0
+            ? newBook.listPrice.amount
+            : utilService.getRandomIntInclusive(80, 500),
+        currencyCode: newBook.listPrice.currencyCode,
+        isOnSale: newBook.listPrice.isOnSale,
+      },
+    }
+  }
+
+  return newBookRemainingFields
 }
 
 // function _createBook(vendor, maxSpeed = 250) {

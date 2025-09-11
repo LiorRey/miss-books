@@ -1,10 +1,12 @@
 /* Setup */
 @import url("https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+@import "cmps/book-index.css";
 @import "cmps/book-filter.css";
 @import "cmps/book-list.css";
 @import "cmps/book-preview.css";
 @import "cmps/book-details.css";
+@import "cmps/book-edit.css";
 @import "cmps/long-txt.css";
 
 /* Vars */
