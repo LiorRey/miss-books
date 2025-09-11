@@ -1,6 +1,7 @@
 import { BookFilter } from "../cmps/BookFilter.jsx"
 import { BookList } from "../cmps/BookList.jsx"
 import { bookService } from "../services/book.service.js"
+import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
 
 const { useEffect, useState } = React
 const { Link } = ReactRouterDOM
@@ -19,6 +20,7 @@ export function BookIndex() {
       .then(setBooks)
       .catch(err => {
         console.log("Error occurred while getting books:", err)
+        showErrorMsg("Error occurred while getting books")
       })
   }
 
@@ -27,9 +29,11 @@ export function BookIndex() {
       .remove(bookId)
       .then(() => {
         setBooks(books => books.filter(book => book.id !== bookId))
+        showSuccessMsg("Book removed successfully!")
       })
       .catch(err => {
         console.log("Error occurred while removing books:", err)
+        showErrorMsg("Error occurred while removing books")
       })
   }
 
