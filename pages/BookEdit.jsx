@@ -20,31 +20,6 @@ export function BookEdit() {
       .catch(err => console.log("Error while loading a book:", err))
   }
 
-  function onSaveBook(ev) {
-    ev.preventDefault()
-
-    let bookToSave = bookToEdit
-
-    // If we’re adding (no id yet) → fill missing fields
-    if (!bookId) {
-      const newBookRemainingFields =
-        bookService.fillRemainingEmptyFieldsOfNewBook(bookToEdit)
-      bookToSave = { ...bookToEdit, ...newBookRemainingFields }
-    }
-
-    bookService
-      .save(bookToSave)
-      .then(savedBook => {
-        console.log("savedBook:", savedBook)
-        showSuccessMsg("Book saved successfully!")
-        navigate("/book")
-      })
-      .catch(err => {
-        console.log("Error while saving a book:", err)
-        showErrorMsg("Error while saving a book")
-      })
-  }
-
   function handleChange({ target }) {
     let { value, name: field } = target
 
@@ -68,6 +43,31 @@ export function BookEdit() {
     } else {
       setBookToEdit(prevBook => ({ ...prevBook, [field]: value }))
     }
+  }
+
+  function onSaveBook(ev) {
+    ev.preventDefault()
+
+    let bookToSave = bookToEdit
+
+    // If we’re adding (no id yet) → fill missing fields
+    if (!bookId) {
+      const newBookRemainingFields =
+        bookService.fillRemainingEmptyFieldsOfNewBook(bookToEdit)
+      bookToSave = { ...bookToEdit, ...newBookRemainingFields }
+    }
+
+    bookService
+      .save(bookToSave)
+      .then(savedBook => {
+        console.log("Book Saved:", savedBook)
+        showSuccessMsg("Book saved successfully!")
+        navigate("/book")
+      })
+      .catch(err => {
+        console.log("Error while saving a book:", err)
+        showErrorMsg("Error while saving a book")
+      })
   }
 
   const {

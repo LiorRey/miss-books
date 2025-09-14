@@ -9,6 +9,7 @@
 
 .book-details-image-and-actions-container img {
   height: 75vh;
+  border: 1px solid black;
 }
 .book-details-actions-container {
   display: flex;
@@ -21,7 +22,7 @@
   margin-inline-end: 0;
 }
 
-/* Right column (info) */
+/* Middle column (info) */
 
 .book-details-info-container {
   display: grid;
@@ -68,4 +69,30 @@
   color: cornflowerblue;
   font-weight: bold;
   animation: pulse 1s infinite;
+}
+
+/* Right column (Add Review and Review List) */
+
+.reviews-add-and-list-container {
+  display: flex;
+  flex-direction: column;
+  margin-inline-start: 7vw;
+  height: 75vh;
+  width: 280px;
+  box-sizing: border-box;
+}
+
+.review-list-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0; /* Prevents expansion beyond the parent height, after adding reviews */
+}
+
+.review-list-scrollable {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  box-sizing: border-box;
 }

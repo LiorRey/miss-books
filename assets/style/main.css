@@ -5,9 +5,11 @@
 @import "cmps/book-filter.css";
 @import "cmps/book-list.css";
 @import "cmps/book-preview.css";
-@import "cmps/book-details.css";
-@import "cmps/book-edit.css";
 @import "cmps/long-txt.css";
+@import "cmps/book-details.css";
+@import "cmps/add-review.css";
+@import "cmps/review-preview.css";
+@import "cmps/book-edit.css";
 @import "cmps/not-found.css";
 @import "cmps/user-msg.css";
 
@@ -81,6 +83,7 @@ button {
   border: 0;
   padding: 0.5em 0.8em;
   border-radius: 4px;
+  border: 1px solid black;
 }
 
 button:hover {

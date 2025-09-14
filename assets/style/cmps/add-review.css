@@ -1,0 +1,42 @@
+.add-review h2 {
+  margin-block-start: 0;
+}
+.add-review form {
+  padding-inline-end: 15px;
+}
+.add-review div {
+  display: flex;
+  align-items: center;
+  margin-block-end: 5px;
+}
+.add-review label {
+  width: 130px;
+  margin-block-end: 5px;
+}
+.add-review input,
+.stars {
+  width: 100%;
+  box-sizing: border-box;
+}
+.add-review button {
+  display: flex;
+  justify-self: center;
+  margin-block: 20px;
+}
+
+/* Stars bonus */
+
+.stars {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+  cursor: pointer;
+  padding-block-end: 4px;
+}
+.star {
+  color: lightslategrey;
+  transition: color 0.2s;
+}
+.star.filled {
+  color: gold;
+}

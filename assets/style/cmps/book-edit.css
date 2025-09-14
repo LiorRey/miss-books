@@ -5,7 +5,7 @@
 }
 .book-edit label {
   width: 240px;
-  margin-bottom: 5px;
+  margin-block-end: 5px;
 }
 .book-edit input {
   margin-inline-start: 0;

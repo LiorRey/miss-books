@@ -91,7 +91,7 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
           />
         </div>
 
-        <button>Clear filters</button>
+        <button>Clear Filters</button>
       </form>
     </section>
   )

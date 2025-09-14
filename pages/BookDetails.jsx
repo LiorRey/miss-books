@@ -1,4 +1,6 @@
 import { LongTxt } from "../cmps/LongTxt.jsx"
+import { AddReview } from "../cmps/AddReview.jsx"
+import { ReviewList } from "../cmps/ReviewList.jsx"
 import { bookService } from "../services/book.service.js"
 
 const { useState, useEffect } = React
@@ -39,6 +41,23 @@ export function BookDetails() {
     return ""
   }
 
+  function onReviewAdded() {
+    loadBook()
+  }
+
+  function onReviewRemoved(reviewId) {
+    bookService
+      .removeReview(params.bookId, reviewId)
+      .then(() => {
+        loadBook()
+        showSuccessMsg("Review removed successfully!")
+      })
+      .catch(err => {
+        console.log("Error occurred while removing reviews:", err)
+        showErrorMsg("Error occurred while removing reviews")
+      })
+  }
+
   if (!book) return <div>Loading...</div>
 
   const {
@@ -52,6 +71,7 @@ export function BookDetails() {
     listPrice,
     thumbnail,
     language,
+    reviews,
   } = book
   const { amount, currencyCode, isOnSale } = listPrice
   const languageName = new Intl.DisplayNames(["en"], {
@@ -115,6 +135,15 @@ export function BookDetails() {
         </h3>
         {isOnSale && <h1 className="on-sale-animation">On Sale!</h1>}
       </div>
+      <section className="reviews-add-and-list-container">
+        <AddReview bookId={params.bookId} onReviewAdded={onReviewAdded} />
+        <div className="review-list-container">
+          <h2>Reviews</h2>
+          <div className="review-list-scrollable">
+            <ReviewList reviews={reviews} onReviewRemoved={onReviewRemoved} />
+          </div>
+        </div>
+      </section>
     </section>
   )
 }

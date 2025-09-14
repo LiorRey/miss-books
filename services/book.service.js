@@ -13,6 +13,8 @@ export const bookService = {
   getEmptyBook,
   getDefaultFilter,
   fillRemainingEmptyFieldsOfNewBook,
+  addReview,
+  removeReview,
   getStyleClassNameForAmountText,
 }
 
@@ -71,7 +73,8 @@ function getEmptyBook(
   categories = [],
   thumbnail = "",
   language = "en",
-  listPrice = { amount: 0, currencyCode: "EUR", isOnSale: false }
+  listPrice = { amount: 0, currencyCode: "EUR", isOnSale: false },
+  reviews = []
 ) {
   return {
     title,
@@ -84,6 +87,7 @@ function getEmptyBook(
     thumbnail,
     language,
     listPrice,
+    reviews,
   }
 }
 
@@ -138,6 +142,7 @@ function _createBooks() {
           currencyCode: "EUR",
           isOnSale: Math.random() > 0.7,
         },
+        reviews: [],
       }
       books.push(book)
     }
@@ -193,6 +198,27 @@ function fillRemainingEmptyFieldsOfNewBook(newBook) {
   }
 
   return newBookRemainingFields
+}
+
+function addReview(bookId, review) {
+  return storageService.get(BOOK_KEY, bookId).then(book => {
+    if (!book.reviews) book.reviews = []
+
+    review.id = utilService.makeId()
+    book.reviews.unshift(review)
+
+    return save(book)
+  })
+}
+
+function removeReview(bookId, reviewId) {
+  return storageService.get(BOOK_KEY, bookId).then(book => {
+    if (!book.reviews) book.reviews = []
+
+    book.reviews = book.reviews.filter(review => review.id !== reviewId)
+
+    return save(book)
+  })
 }
 
 // function _createBook(vendor, maxSpeed = 250) {
