@@ -15,7 +15,7 @@ function getTodayLocalDate() {
 export function AddReview({ bookId, onReviewAdded }) {
   const [reviewToAdd, setReviewToAdd] = useState({
     fullname: "",
-    rating: 0,
+    rating: 1,
     readAt: getTodayLocalDate(),
   })
 
@@ -38,7 +38,7 @@ export function AddReview({ bookId, onReviewAdded }) {
         showSuccessMsg("Review added successfully!")
         setReviewToAdd({
           fullname: "",
-          rating: 0,
+          rating: 1,
           readAt: getTodayLocalDate(),
         })
         onReviewAdded()
