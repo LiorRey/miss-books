@@ -1,4 +1,4 @@
-const { useState, useEffect } = React
+const { Link, Outlet } = ReactRouterDOM
 
 export function AboutUs() {
   return (
@@ -10,6 +10,15 @@ export function AboutUs() {
         ratione consectetur nesciunt officiis aperiam iusto! Rem eius blanditiis
         itaque. Nihil, natus?
       </span>
+      <nav>
+        <Link to="/about/team">
+          <i>Team</i>
+        </Link>
+        <Link to="/about/goal">
+          <i>Goal</i>
+        </Link>
+      </nav>
+      <Outlet />
     </section>
   )
 }
