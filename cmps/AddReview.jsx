@@ -1,6 +1,3 @@
-import { bookService } from "../services/book.service.js"
-import { showSuccessMsg, showErrorMsg } from "../services/event-bus.service.js"
-
 const { useState } = React
 
 function getTodayLocalDate() {
@@ -12,12 +9,16 @@ function getTodayLocalDate() {
   return `${yyyy}-${mm}-${dd}` // Format for <input type="date">
 }
 
-export function AddReview({ bookId, onReviewAdded }) {
-  const [reviewToAdd, setReviewToAdd] = useState({
-    fullname: "",
-    rating: 1,
-    readAt: getTodayLocalDate(),
-  })
+export function AddReview({ addReview }) {
+  const [reviewToAdd, setReviewToAdd] = useState(getEmptyReview())
+
+  function getEmptyReview() {
+    return {
+      fullname: "",
+      rating: 1,
+      readAt: getTodayLocalDate(),
+    }
+  }
 
   function handleChange({ target }) {
     const { value, name: field } = target
@@ -31,22 +32,8 @@ export function AddReview({ bookId, onReviewAdded }) {
 
   function onAddReview(ev) {
     ev.preventDefault()
-
-    bookService
-      .addReview(bookId, reviewToAdd)
-      .then(() => {
-        showSuccessMsg("Review added successfully!")
-        setReviewToAdd({
-          fullname: "",
-          rating: 1,
-          readAt: getTodayLocalDate(),
-        })
-        onReviewAdded()
-      })
-      .catch(err => {
-        console.log("Error while adding a review:", err)
-        showErrorMsg("Error while adding a review")
-      })
+    addReview(reviewToAdd)
+    setReviewToAdd(getEmptyReview())
   }
 
   return (

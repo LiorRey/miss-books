@@ -1,4 +1,4 @@
-export function ReviewPreview({ review, onReviewRemoved }) {
+export function ReviewPreview({ review, removeReview }) {
   const { fullname, rating, readAt } = review
 
   return (
@@ -7,7 +7,7 @@ export function ReviewPreview({ review, onReviewRemoved }) {
         <h3>Full Name: {fullname}</h3>
         <h3>Rating: {"⭐".repeat(rating)}</h3>
         <h3>Reat At: {readAt}</h3>
-        <button onClick={() => onReviewRemoved(review.id)}>X</button>
+        <button onClick={() => removeReview(review.id)}>X</button>
       </div>
     </article>
   )

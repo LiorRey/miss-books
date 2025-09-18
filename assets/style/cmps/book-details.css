@@ -9,6 +9,7 @@
 
 .book-details-image-and-actions-container img {
   height: 75vh;
+  width: 575px;
   border: 1px solid black;
 }
 .book-details-actions-container {

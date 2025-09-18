@@ -1,5 +1,5 @@
 import { LongTxt } from "./LongTxt.jsx"
-import { bookService } from "../services/book.service.js"
+import { utilService } from "../services/util.service.js"
 
 export function BookPreview({ book }) {
   const { title, description, listPrice, thumbnail } = book
@@ -14,7 +14,7 @@ export function BookPreview({ book }) {
         classNameFromPreview="preview-description"
       />
       <h3
-        className={`preview-price ${bookService.getStyleClassNameForAmountText(
+        className={`preview-price ${utilService.getStyleClassNameForAmountText(
           amount
         )}`}
       >

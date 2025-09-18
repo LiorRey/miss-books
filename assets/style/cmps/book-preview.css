@@ -1,7 +1,7 @@
 .book-preview {
   display: grid;
   width: 400px;
-  grid-template-rows: 1fr 4fr 1fr 1fr 6fr;
+  grid-template-rows: 5fr 8fr 2fr 2fr 12fr;
   grid-template-areas:
     "title"
     "description"
@@ -32,5 +32,6 @@
 }
 .book-preview img {
   width: 250px;
+  height: 332px;
   border: 1px solid black;
 }

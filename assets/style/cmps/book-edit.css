@@ -1,19 +1,31 @@
-.book-edit div {
+.book-edit-container {
+  display: flex;
+  gap: 100px;
+}
+
+.add-by-form-container {
+  flex: 1;
+}
+.border-between-add-containers {
+  border-inline-end: 2px solid #ccc; /* vertical line on the right */
+  padding-inline-end: 20px; /* space between content and border */
+}
+.add-by-form-container div {
   display: flex;
   align-items: center;
   margin-block-end: 5px;
 }
-.book-edit label {
+.add-by-form-container label {
   width: 240px;
   margin-block-end: 5px;
 }
-.book-edit input {
+.add-by-form-container input {
   margin-inline-start: 0;
 }
-.book-edit input:not([type="checkbox"]) {
-  width: 500px;
+.add-by-form-container input:not([type="checkbox"]) {
+  width: 400px;
 }
-.book-edit button {
+.add-by-form-container button {
   margin-inline-start: 0;
   margin-block-end: 0;
 }

@@ -2,6 +2,8 @@ import { utilService } from "./util.service.js"
 import { storageService } from "./async-storage.service.js"
 
 const BOOK_KEY = "bookDB"
+const CACHE_STORAGE_KEY = "googleBooksCache"
+const gCache = utilService.loadFromStorage(CACHE_STORAGE_KEY) || {}
 const ctgs = ["Love", "Fiction", "Poetry", "Computers", "Religion"]
 _createBooks()
 
@@ -15,7 +17,8 @@ export const bookService = {
   fillRemainingEmptyFieldsOfNewBook,
   addReview,
   removeReview,
-  getStyleClassNameForAmountText,
+  getGoogleBooks,
+  addGoogleBook,
 }
 
 // For Debug (easy access from console):
@@ -154,46 +157,52 @@ function _createBooks() {
 function fillRemainingEmptyFieldsOfNewBook(newBook) {
   let newBookRemainingFields = {}
   if (newBook) {
-    newBookRemainingFields = {
-      title:
-        newBook.title.trim() !== "" ? newBook.title : utilService.makeLorem(2),
-      subtitle:
-        newBook.subtitle.trim() !== ""
-          ? newBook.subtitle
-          : utilService.makeLorem(4),
-      authors:
-        newBook.authors.length > 0
-          ? newBook.authors
-          : [utilService.makeLorem(1)],
-      publishedDate:
-        newBook.publishedDate >= 1950 &&
-        newBook.publishedDate <= new Date().getFullYear()
-          ? newBook.publishedDate
-          : utilService.getRandomIntInclusive(1950, 2024),
-      description:
-        newBook.description.trim() !== ""
-          ? newBook.description
-          : utilService.makeLorem(20),
-      pageCount:
-        newBook.pageCount > 0
-          ? newBook.pageCount
-          : utilService.getRandomIntInclusive(20, 600),
-      categories:
-        newBook.categories.length > 0
-          ? newBook.categories
-          : [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
-      thumbnail: `assets/img/books-imgs/${utilService.getRandomIntInclusive(
-        1,
-        20
-      )}.jpg`,
-      listPrice: {
-        amount:
-          newBook.listPrice.amount > 0
-            ? newBook.listPrice.amount
-            : utilService.getRandomIntInclusive(80, 500),
-        currencyCode: newBook.listPrice.currencyCode,
-        isOnSale: newBook.listPrice.isOnSale,
-      },
+    const {
+      title,
+      subtitle,
+      authors,
+      publishedDate,
+      description,
+      pageCount,
+      categories,
+      listPrice,
+    } = newBook
+    const { amount, currencyCode, isOnSale } = listPrice
+
+    newBookRemainingFields.title =
+      title.trim() !== "" ? title : utilService.makeLorem(2)
+
+    newBookRemainingFields.subtitle =
+      subtitle.trim() !== "" ? subtitle : utilService.makeLorem(4)
+
+    newBookRemainingFields.authors =
+      authors.length > 0 ? authors : [utilService.makeLorem(1)]
+
+    newBookRemainingFields.publishedDate =
+      publishedDate >= 1950 && publishedDate <= new Date().getFullYear()
+        ? publishedDate
+        : utilService.getRandomIntInclusive(1950, 2024)
+
+    newBookRemainingFields.description =
+      description.trim() !== "" ? description : utilService.makeLorem(20)
+
+    newBookRemainingFields.pageCount =
+      pageCount > 0 ? pageCount : utilService.getRandomIntInclusive(20, 600)
+
+    newBookRemainingFields.categories =
+      categories.length > 0
+        ? categories
+        : [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]]
+
+    newBookRemainingFields.thumbnail = `assets/img/books-imgs/${utilService.getRandomIntInclusive(
+      1,
+      20
+    )}.jpg`
+
+    newBookRemainingFields.listPrice = {
+      amount: amount > 0 ? amount : utilService.getRandomIntInclusive(80, 500),
+      currencyCode: currencyCode,
+      isOnSale: isOnSale,
     }
   }
 
@@ -221,14 +230,78 @@ function removeReview(bookId, reviewId) {
   })
 }
 
-// function _createBook(vendor, maxSpeed = 250) {
-//   const book = getEmptyBook(vendor, maxSpeed)
-//   book.id = utilService.makeId()
-//   return book
-// }
+function getGoogleBooks(bookName) {
+  const googleBooks = gCache[bookName]
+  if (googleBooks) {
+    console.log("Cached data from storage:", googleBooks)
+    return Promise.resolve(googleBooks)
+  }
 
-function getStyleClassNameForAmountText(amount) {
-  if (amount > 150) return "amount-red"
-  if (amount < 20) return "amount-green"
-  return ""
+  const url = `https://www.googleapis.com/books/v1/volumes?printType=books&q=${encodeURIComponent(
+    bookName
+  )}`
+  return axios
+    .get(url)
+    .then(res => res.data.items)
+    .then(_formatGoogleBooks)
+    .then(books => {
+      console.log("Fetched data from network:", books)
+      gCache[bookName] = books
+      utilService.saveToStorage(CACHE_STORAGE_KEY, gCache)
+
+      return books
+    })
+}
+
+function _formatGoogleBooks(googleBooks) {
+  return googleBooks.map(googleBook => {
+    const { volumeInfo } = googleBook
+    const {
+      title,
+      subtitle,
+      authors,
+      publishedDate,
+      description,
+      pageCount,
+      categories,
+      imageLinks,
+      language,
+    } = volumeInfo
+
+    const formattedGoogleBook = {
+      id: googleBook.id,
+      title: title || utilService.makeLorem(2),
+      subtitle: subtitle || "",
+      authors: authors || [utilService.makeLorem(1)],
+      publishedDate:
+        (publishedDate && Number(publishedDate.slice(0, 4))) ||
+        utilService.getRandomIntInclusive(1950, 2024),
+      description:
+        (description && description.slice(0, 250)) || utilService.makeLorem(20),
+      pageCount: pageCount || utilService.getRandomIntInclusive(20, 600),
+      categories: categories || [
+        ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)],
+      ],
+      thumbnail:
+        (imageLinks && imageLinks.thumbnail) ||
+        `assets/img/books-imgs/${utilService.getRandomIntInclusive(1, 20)}.jpg`,
+      language: language || "en",
+      listPrice: {
+        amount: utilService.getRandomIntInclusive(80, 500),
+        currencyCode: "EUR",
+        isOnSale: Math.random() > 0.7,
+      },
+      reviews: [],
+    }
+
+    return formattedGoogleBook
+  })
+}
+
+function addGoogleBook(googleBook) {
+  return query().then(books => {
+    const foundBook = books.find(book => book.id === googleBook.id)
+    if (foundBook) return Promise.reject("Book already saved")
+    return storageService.post(BOOK_KEY, googleBook)
+  })
 }

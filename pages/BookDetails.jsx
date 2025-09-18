@@ -2,6 +2,7 @@ import { LongTxt } from "../cmps/LongTxt.jsx"
 import { AddReview } from "../cmps/AddReview.jsx"
 import { ReviewList } from "../cmps/ReviewList.jsx"
 import { bookService } from "../services/book.service.js"
+import { utilService } from "../services/util.service.js"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
@@ -41,15 +42,30 @@ export function BookDetails() {
     return ""
   }
 
-  function onReviewAdded() {
-    loadBook()
+  function onAddReview(reviewToAdd) {
+    bookService
+      .addReview(book.id, reviewToAdd)
+      .then(() => {
+        setBook(prevBook => ({
+          ...prevBook,
+          reviews: [reviewToAdd, ...prevBook.reviews],
+        }))
+        showSuccessMsg("Review added successfully!")
+      })
+      .catch(err => {
+        console.log("Error while adding a review:", err)
+        showErrorMsg("Error while adding a review")
+      })
   }
 
-  function onReviewRemoved(reviewId) {
+  function onRemoveReview(reviewId) {
     bookService
-      .removeReview(params.bookId, reviewId)
+      .removeReview(book.id, reviewId)
       .then(() => {
-        loadBook()
+        setBook(prevBook => ({
+          ...prevBook,
+          reviews: prevBook.reviews.filter(review => review.id !== reviewId),
+        }))
         showSuccessMsg("Review removed successfully!")
       })
       .catch(err => {
@@ -128,7 +144,7 @@ export function BookDetails() {
           <br />
           {languageName.of(language)}
         </h3>
-        <h3 className={bookService.getStyleClassNameForAmountText(amount)}>
+        <h3 className={utilService.getStyleClassNameForAmountText(amount)}>
           Price:
           <br />
           {amount} {currencyCode}
@@ -136,11 +152,11 @@ export function BookDetails() {
         {isOnSale && <h1 className="on-sale-animation">On Sale!</h1>}
       </div>
       <section className="reviews-add-and-list-container">
-        <AddReview bookId={params.bookId} onReviewAdded={onReviewAdded} />
+        <AddReview addReview={onAddReview} />
         <div className="review-list-container">
           <h2>Reviews</h2>
           <div className="review-list-scrollable">
-            <ReviewList reviews={reviews} onReviewRemoved={onReviewRemoved} />
+            <ReviewList reviews={reviews} removeReview={onRemoveReview} />
           </div>
         </div>
       </section>
