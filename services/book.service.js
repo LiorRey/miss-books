@@ -14,6 +14,7 @@ export const bookService = {
   save,
   getEmptyBook,
   getDefaultFilter,
+  getFilterFromSearchParams,
   fillRemainingEmptyFieldsOfNewBook,
   addReview,
   removeReview,
@@ -40,8 +41,10 @@ function query(filterBy = {}) {
       books = books.filter(book => book.listPrice.amount <= filterBy.maxPrice)
     }
 
-    if (filterBy.onSale) {
-      books = books.filter(book => book.listPrice.isOnSale === filterBy.onSale)
+    if (filterBy.onlyOnSale) {
+      books = books.filter(
+        book => book.listPrice.isOnSale === filterBy.onlyOnSale
+      )
     }
 
     return books
@@ -95,13 +98,27 @@ function getEmptyBook(
 }
 
 function getDefaultFilter(
-  filterBy = { title: "", description: "", maxPrice: 0, onSale: false }
+  filterBy = { title: "", description: "", maxPrice: "", onlyOnSale: false }
 ) {
   return {
     title: filterBy.title,
     description: filterBy.description,
     maxPrice: filterBy.maxPrice,
-    onSale: filterBy.onSale,
+    onlyOnSale: filterBy.onlyOnSale,
+  }
+}
+
+function getFilterFromSearchParams(searchParams) {
+  const title = searchParams.get("title") || ""
+  const description = searchParams.get("description") || ""
+  const maxPrice = searchParams.get("maxPrice") || ""
+  const onlyOnSale = searchParams.get("onlyOnSale") || ""
+
+  return {
+    title,
+    description,
+    maxPrice,
+    onlyOnSale,
   }
 }
 

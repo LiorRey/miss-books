@@ -33,7 +33,7 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
     onSetFilterBy(defaultFilter)
   }
 
-  const { title, description, maxPrice, onSale } = filterByToEdit
+  const { title, description, maxPrice, onlyOnSale } = filterByToEdit
   return (
     <section className="book-filter">
       <h2>Filter Our Books</h2>
@@ -71,7 +71,7 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
           <input
             onChange={handleChange}
             type="number"
-            value={maxPrice}
+            value={maxPrice || ""}
             name="maxPrice"
             id="max-price"
             min="0"
@@ -85,8 +85,8 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
           <input
             onChange={handleChange}
             type="checkbox"
-            checked={onSale}
-            name="onSale"
+            checked={onlyOnSale}
+            name="onlyOnSale"
             id="on-sale"
           />
         </div>

@@ -7,6 +7,7 @@ export const utilService = {
   getDayName,
   getMonthName,
   animateCSS,
+  getTruthyValues,
   debounce,
   getStyleClassNameForAmountText,
 }
@@ -114,6 +115,19 @@ function animateCSS(el, animation = "bounce") {
 
     el.addEventListener("animationend", handleAnimationEnd, { once: true })
   })
+}
+
+function getTruthyValues(obj) {
+  const newObj = {}
+
+  for (const key in obj) {
+    const value = obj[key]
+    if (value) {
+      newObj[key] = value
+    }
+  }
+
+  return newObj
 }
 
 function debounce(callback, wait) {
