@@ -4,19 +4,41 @@
 .add-review form {
   padding-inline-end: 15px;
 }
-.add-review div {
+.add-review
+  div:not(.rating-radio-buttons-container, .rating-dynamic-cmp-container) {
   display: flex;
   align-items: center;
   margin-block-end: 5px;
 }
-.add-review label {
+.add-review label:has(h3) {
   width: 130px;
   margin-block-end: 5px;
 }
-.add-review input,
+.add-review input:not([type="radio"]),
+.rating-inputs-container,
 .stars {
   width: 100%;
   box-sizing: border-box;
+}
+.rating-inputs-container {
+  display: flex;
+  flex-direction: column;
+}
+.rating-radio-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.add-review input[type="radio"] {
+  margin: 0 5px 0 0;
+}
+.rating-dynamic-cmp-container {
+  align-content: center;
+  width: 50%;
+  height: 50px;
+}
+.rating-dynamic-cmp-container select {
+  width: 100%;
 }
 .add-review button {
   display: flex;
