@@ -39,6 +39,8 @@ export function AddReview({ addReview }) {
     setReviewToAdd(getEmptyReview())
   }
 
+  const ratingOptions = ["select", "textbox", "stars"]
+
   return (
     <section className="add-review">
       <h2>Add Review</h2>
@@ -63,45 +65,25 @@ export function AddReview({ addReview }) {
           </label>
           <div className="rating-inputs-container">
             <div className="rating-radio-buttons-container">
-              <div>
-                <input
-                  onChange={ev => setRatingCmpType(ev.target.value)}
-                  type="radio"
-                  value="select"
-                  name="ratingType"
-                  id="select"
-                  checked={ratingCmpType === "select"}
-                />
-                <label htmlFor="select">
-                  <h4>By Select</h4>
-                </label>
-              </div>
-              <div>
-                <input
-                  onChange={ev => setRatingCmpType(ev.target.value)}
-                  type="radio"
-                  value="textbox"
-                  name="ratingType"
-                  id="textbox"
-                  checked={ratingCmpType === "textbox"}
-                />
-                <label htmlFor="textbox">
-                  <h4>By Textbox</h4>
-                </label>
-              </div>
-              <div>
-                <input
-                  onChange={ev => setRatingCmpType(ev.target.value)}
-                  type="radio"
-                  value="stars"
-                  name="ratingType"
-                  id="stars"
-                  checked={ratingCmpType === "stars"}
-                />
-                <label htmlFor="stars">
-                  <h4>By Stars</h4>
-                </label>
-              </div>
+              {ratingOptions.map(ratingOption => (
+                <div key={ratingOption}>
+                  <input
+                    onChange={e => setRatingCmpType(e.target.value)}
+                    type="radio"
+                    value={ratingOption}
+                    name="ratingType"
+                    id={ratingOption}
+                    checked={ratingCmpType === ratingOption}
+                  />
+                  <label htmlFor={ratingOption}>
+                    <h4>
+                      By{" "}
+                      {ratingOption.charAt(0).toUpperCase() +
+                        ratingOption.slice(1)}
+                    </h4>
+                  </label>
+                </div>
+              ))}
             </div>
             <div className="rating-dynamic-cmp-container">
               <RatingDynamicCmp

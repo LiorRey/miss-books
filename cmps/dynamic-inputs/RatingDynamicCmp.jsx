@@ -2,12 +2,14 @@ import { RateBySelect } from "./RateBySelect.jsx"
 import { RateByTextbox } from "./RateByTextbox.jsx"
 import { RateByStars } from "./RateByStars.jsx"
 
-export function RatingDynamicCmp(props) {
-  const cmpMap = {
-    select: <RateBySelect {...props} />,
-    textbox: <RateByTextbox {...props} />,
-    stars: <RateByStars {...props} />,
-  }
+const cmpMap = {
+  select: RateBySelect,
+  textbox: RateByTextbox,
+  stars: RateByStars,
+}
 
-  return cmpMap[props.ratingCmpType]
+export function RatingDynamicCmp({ val, handleRatingChange, ratingCmpType }) {
+  const Component = cmpMap[ratingCmpType]
+
+  return <Component val={val} handleRatingChange={handleRatingChange} />
 }
